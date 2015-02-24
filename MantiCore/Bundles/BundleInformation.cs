@@ -1,6 +1,6 @@
 using System;
 
-namespace MantiCore.Bundle
+namespace MantiCore.Bundles
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class BundleInformation : Attribute

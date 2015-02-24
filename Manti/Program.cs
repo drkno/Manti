@@ -1,14 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using MantiCore.Bundle;
+using System.Reflection;
+using MantiCore;
+using MantiCore.Bundles;
 using MantiCore.Dependant;
+using MantiCore.Startup.Arguments;
 
 namespace Manti
 {
     class Program
     {
-        [BundleInformation("test1"), DependsOn]
-        class TestBundle {}
+        [BundleInformation("test1"), DependsOn, BundleArgument("test1234", "--helloworld")]
+        class TestBundle : Bundle {
+            public override void InitialiseBundle(Platform platform, BundleArgument[] arguments)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void StartBundle()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void StopBundle()
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         [BundleInformation("test2"), DependsOn]
         class Test1Bundle { }
@@ -35,6 +53,12 @@ namespace Manti
 
         static void Main(string[] args)
         {
+            var options = new OptionSet();
+            options.Parse(args);
+            var bArgs = BundleArgument.GetBundleArguments(new TestBundle());
+            options.SetBundleArguments(bArgs);
+
+
             var listD = new List<DependsOn>();
             listD.Add(DependsOn.GetDependancies(typeof(TestBundle)));
             listD.Add(DependsOn.GetDependancies(typeof(Test1Bundle)));

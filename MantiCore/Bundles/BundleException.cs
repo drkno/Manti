@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MantiCore.Bundle
+namespace MantiCore.Bundles
 {
     public class BundleException : Exception
     {

@@ -54,17 +54,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bundle\Bundle.cs" />
-    <Compile Include="Bundle\BundleArgument.cs" />
-    <Compile Include="Bundle\BundleException.cs" />
-    <Compile Include="Bundle\BundleInformation.cs" />
+    <Compile Include="Bundles\Bundle.cs" />
+    <Compile Include="Bundles\BundleArgument.cs" />
+    <Compile Include="Bundles\BundleException.cs" />
+    <Compile Include="Bundles\BundleInformation.cs" />
+    <Compile Include="Bundles\BundleSecurity.cs" />
+    <Compile Include="Bundles\Internal\InternalBundle.cs" />
     <Compile Include="Dependant\DependancyGraph.cs" />
     <Compile Include="Dependant\DependsOn.cs" />
     <Compile Include="Interop\InteropManager.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup\Load\EmbeddedBundleLoader.cs" />
+    <Compile Include="Startup\Arguments\HelpPrinter.cs" />
+    <Compile Include="Startup\Arguments\Option.cs" />
+    <Compile Include="Startup\Arguments\OptionSet.cs" />
+    <Compile Include="Startup\Arguments\OptionException.cs" />
+    <Compile Include="Startup\Arguments\OptionStyle.cs" />
+    <Compile Include="Startup\Load\BundleLoader.cs" />
     <Compile Include="Startup\Load\IBundleLoader.cs" />
-    <Compile Include="Startup\Load\LocalBundleLoader.cs" />
+    <Compile Include="Startup\Load\DllBundleLoader.cs" />
     <Compile Include="Startup\StartupManager.cs" />
   </ItemGroup>
   <ItemGroup>

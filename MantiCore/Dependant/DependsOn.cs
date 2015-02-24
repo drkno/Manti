@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using MantiCore.Bundle;
+using MantiCore.Bundles;
 
 namespace MantiCore.Dependant
 {
@@ -15,7 +15,7 @@ namespace MantiCore.Dependant
             Dependancies = dependancies;
         }
 
-        public static DependsOn GetDependancies(Bundle.Bundle bundle)
+        public static DependsOn GetDependancies(Bundle bundle)
         {
             return GetDependancies(bundle.GetType());
         }
