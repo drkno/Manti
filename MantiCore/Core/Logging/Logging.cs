@@ -11,7 +11,7 @@ namespace MantiCore.Core.Logging
         private ConsoleColor _consoleColour;
         private bool _loggingThreadShouldRun;
         private readonly Thread _loggingThread;
-        private readonly BlockingCollection<string> writeQueue;
+        private readonly BlockingCollection<string> _writeQueue;
         private readonly ObservableServiceList<LoggingBackend> _loggingBackends;
         private readonly LoggingFallback _fallback;
 
@@ -58,12 +58,12 @@ namespace MantiCore.Core.Logging
         {
             _loggingThreadShouldRun = true;
             _fallback = new LoggingFallback();
-            _loggingBackends = interopManager.GetServices(LoggingBackend);
-            writeQueue = new BlockingCollection<string>();
+            _loggingBackends = interopManager.GetServices(typeof (LoggingBackend));
+            _writeQueue = new BlockingCollection<string>();
             _loggingThread = new Thread(
                 () =>
                 {
-                    while (_loggingThreadShouldRun) InternalWrite(writeQueue.Take());
+                    while (_loggingThreadShouldRun) InternalWrite(_writeQueue.Take());
                 });
             _loggingThread.IsBackground = true;
             _loggingThread.Start();
@@ -95,11 +95,13 @@ namespace MantiCore.Core.Logging
         {
             _loggingThreadShouldRun = false;
             WriteLine(message);
+            _loggingThread.Abort();
+            _loggingThread.Join();
         }
 
         public void Write(params object[] obj)
         {
-            writeQueue.Add(obj);
+            _writeQueue.Add(obj);
         }
 
         private void InternalWrite(params object[] obj)

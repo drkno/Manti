@@ -66,6 +66,7 @@
     <Compile Include="Dependant\DependancyGraph.cs" />
     <Compile Include="Dependant\DependsOn.cs" />
     <Compile Include="Interop\InteropManager.cs" />
+    <Compile Include="Interop\ObservableServiceList.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup\Arguments\HelpPrinter.cs" />
