@@ -11,6 +11,7 @@
     <AssemblyName>MantiCore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -57,9 +57,12 @@
     <Compile Include="Bundles\Bundle.cs" />
     <Compile Include="Bundles\BundleArgument.cs" />
     <Compile Include="Bundles\BundleException.cs" />
+    <Compile Include="Bundles\BundleHandle.cs" />
     <Compile Include="Bundles\BundleInformation.cs" />
     <Compile Include="Bundles\BundleSecurity.cs" />
     <Compile Include="Bundles\Internal\InternalBundle.cs" />
+    <Compile Include="Core\Logging\LoggingBackend.cs" />
+    <Compile Include="Core\Logging\Logging.cs" />
     <Compile Include="Dependant\DependancyGraph.cs" />
     <Compile Include="Dependant\DependsOn.cs" />
     <Compile Include="Interop\InteropManager.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="Startup\Arguments\OptionSet.cs" />
     <Compile Include="Startup\Arguments\OptionException.cs" />
     <Compile Include="Startup\Arguments\OptionStyle.cs" />
+    <Compile Include="Bundles\BundleStatus.cs" />
     <Compile Include="Startup\Load\BundleLoader.cs" />
     <Compile Include="Startup\Load\IBundleLoader.cs" />
     <Compile Include="Startup\Load\DllBundleLoader.cs" />

@@ -7,6 +7,10 @@ namespace MantiCore.Bundles
     {
         public BundleInformation(string bundleIdentifier)
         {
+            if (bundleIdentifier.ToLower().StartsWith("manti"))
+            {
+                throw new InvalidBundleInformationException("Only internal bundle identifiers can start with \"manti\".");
+            }
             BundleIdentifier = bundleIdentifier;
         }
 
@@ -15,5 +19,11 @@ namespace MantiCore.Bundles
         public string Authour { get; set; }
         public string Description { get; set; }
         public int Version { get; set; }
+    }
+
+    public class InvalidBundleInformationException : Exception
+    {
+        public InvalidBundleInformationException(string message, Exception innerException = null)
+            : base(message, innerException) { }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MantiCore.Interop
 {
-    class InteropManager
+    public class InteropManager
     {
     }
 }
