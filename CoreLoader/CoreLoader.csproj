@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{92F0CD28-5B83-4DE3-B197-C0D3A2FA06C8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CoreLoader</RootNamespace>
+    <AssemblyName>CoreLoader</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImpromptuInterface, Version=6.2.2.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImpromptuInterface.6.2.2\lib\net40\ImpromptuInterface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\ConflictingInterfaceRegistrationException.cs" />
+    <Compile Include="IITest.cs" />
+    <Compile Include="Plugins\IPluginDefinition.cs" />
+    <Compile Include="Core\PluginRepository.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Logger\Log.cs" />
+    <Compile Include="Plugins\Loader\IPluginLoader.cs" />
+    <Compile Include="Exceptions\NoRegisteredPluginsException.cs" />
+    <Compile Include="Plugins\DefaultPluginDefinitions.cs" />
+    <Compile Include="Plugins\Loader\MsilLoader\MsilLoader.cs" />
+    <Compile Include="Exceptions\NoSuchSearchLocationException.cs" />
+    <Compile Include="Core\Platform.cs" />
+    <Compile Include="Exceptions\PlatformSecurityException.cs" />
+    <Compile Include="Plugins\Loader\MsilLoader\MsilPluginLoaderDefinition.cs" />
+    <Compile Include="Plugins\Logging\ILoggingPlugin.cs" />
+    <Compile Include="Plugins\Logging\ConsoleLoggingPlugin.cs" />
+    <Compile Include="Plugins\Logging\LoggingPluginDefinition.cs" />
+    <Compile Include="Plugins\Repl\ReplPluginDefinition.cs" />
+    <Compile Include="Plugins\Repl\ReplService.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
