@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,23 +21,29 @@ namespace CoreLoader.Plugins.Loader.MsilLoader
 
         public string[] HandlesExtensions { get; } = {"dll", "exe"};
 
+        private static dynamic LoadPlugin(Platform platform, Type type)
+        {
+            return Activator.CreateInstance(type, platform);
+        }
+
         private void LoadFile(string file, ref List<IPluginDefinition> collection)
         {
             try
             {
                 var assem = Assembly.LoadFrom(file);
                 foreach (var type in assem.GetTypes()
-                    .Where(t => !t.IsInterface && !t.IsAbstract && t.Name == "PluginDefinition"))
+                    .Where(t => !t.IsInterface && !t.IsAbstract && t.Name.EndsWith("PluginDefinition")))
                 {
                     try
                     {
-                        var obj = Activator.CreateInstance(type);
-                        var pluginDefinition = obj.ActLike<IPluginDefinition>();
+                        dynamic obj = Activator.CreateInstance(type).MakeExtensable();
+                        obj.CreateInstance = new Func<Platform, dynamic>(platform => LoadPlugin(platform, obj.Type));
+                        var pluginDefinition = Impromptu.ActLike<IPluginDefinition>(obj);
                         collection.Add(pluginDefinition);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        // ignored
+                        _log.Error("Couldn't load " + file + " as MSIL plugin. Failed with error: " + e);
                     }
                 }
             }
@@ -51,7 +58,7 @@ namespace CoreLoader.Plugins.Loader.MsilLoader
             if (string.IsNullOrWhiteSpace(searchLocation))
             {
                 _log.Warning("No search location provided. Defaulting to current directory.");
-                searchLocation = Path.Combine(Environment.CurrentDirectory, "plugins", "msil");
+                searchLocation = Path.Combine(Environment.CurrentDirectory, "plugins");
             }
 
             _log.Info("Getting plugins from " + searchLocation);
@@ -81,7 +88,7 @@ namespace CoreLoader.Plugins.Loader.MsilLoader
 
         public void Dispose()
         {
-            _log.Warning("Unloading MSILLoader plugin.");
+            _log.Warning("Unloading MSIL Loader plugin.");
         }
     }
 }

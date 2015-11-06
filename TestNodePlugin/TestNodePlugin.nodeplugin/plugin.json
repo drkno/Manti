@@ -1,0 +1,7 @@
+﻿{
+    "Name": "Test Plugin",
+    "Version": "1.0",
+    "Description": "This is a test description.",
+    "PluginFile": "hello.js",
+    "Provides": "nz.co.makereti.test"
+}

@@ -13,6 +13,7 @@ namespace CoreLoader.Core
     {
         public Log Log { get; }
         private readonly PluginRepository _pluginRepository;
+        private IEnumerable<IPluginMain> _pluginMains;
 
         public Platform()
         {
@@ -29,7 +30,7 @@ namespace CoreLoader.Core
             }
         }
 
-        public void GetPlugins<T>(string name, out IEnumerable<T> plugins) where T : class, IPlugin
+        public void GetPlugins<T>(string name, out IEnumerable<T> plugins) where T : class
         {
             try
             {
@@ -45,6 +46,8 @@ namespace CoreLoader.Core
         public void Dispose()
         {
             Log.Info("Shutting down platform.");
+            _pluginMains = null;
+            _pluginRepository.Destroy("nz.makereti.manti.pluginmain");
             foreach (var plugin in _pluginRepository.Plugins())
             {
                 _pluginRepository.RemovePlugin(plugin);
@@ -65,10 +68,7 @@ namespace CoreLoader.Core
             Log.Write("Core Plugins Complete");
 
             LoadPlugin();
-
-            IEnumerable<IITest> e;
-            GetPlugins("nz.co.makereti.test", out e);
-            Console.WriteLine(e.First().HelloWorld(133333337));
+            _pluginRepository.Get("nz.makereti.manti.pluginmain", out _pluginMains);
         }
 
         private void InternalLoadPlugin(IPluginDefinition pluginDefinition)

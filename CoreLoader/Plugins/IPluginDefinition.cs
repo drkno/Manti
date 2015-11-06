@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CoreLoader.Core;
 
 namespace CoreLoader.Plugins
 {
@@ -7,7 +7,7 @@ namespace CoreLoader.Plugins
         string Name { get; }
         string Version { get; }
         string Description { get; }
-        Type PluginClass { get; }
-        string[] PluginProvides { get; }
+        object[] Provides { get; }
+        dynamic CreateInstance(Platform platform);
     }
 }

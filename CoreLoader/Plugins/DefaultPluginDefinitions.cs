@@ -1,12 +1,15 @@
 ﻿using CoreLoader.Plugins.Loader.MsilLoader;
 using CoreLoader.Plugins.Logging;
+using CoreLoader.Plugins.Logging.Console;
+using CoreLoader.Plugins.Logging.Disk;
 
 namespace CoreLoader.Plugins
 {
     internal static class DefaultPluginDefinitions
     {
         public static IPluginDefinition[] DefaultDefinitions { get; } = {
-            new LoggingPluginDefinition(),
+            new ConsoleLoggingPluginDefinition(),
+            new DiskLoggingPluginDefinition(),
             new MsilPluginLoaderDefinition()
         };
     }

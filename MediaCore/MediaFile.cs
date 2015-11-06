@@ -1,0 +1,7 @@
+﻿namespace MediaCore
+{
+    class MediaFile
+    {
+        
+    }
+}

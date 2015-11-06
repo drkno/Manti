@@ -1,0 +1,10 @@
+{
+  "name": "TestNodePlugin",
+  "version": "0.0.0",
+  "description": "TestNodePlugin",
+  "main": "app.js",
+  "author": {
+    "name": "Matthew",
+    "email": ""
+  }
+}

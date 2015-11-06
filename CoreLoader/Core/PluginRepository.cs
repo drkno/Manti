@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CoreLoader.Plugins;
 using ImpromptuInterface;
@@ -27,7 +26,7 @@ namespace CoreLoader.Core
             _references = new Dictionary<string, List<ReferenceManager>>();
         }
 
-        internal void Get<T>(string iface, out IEnumerable<T> plugins) where T : class, IPlugin
+        internal void Get<T>(string iface, out IEnumerable<T> plugins) where T : class
         {
             _platform.Log?.Write("Plugins for " + iface + " requested.");
             List<object> p;
@@ -50,7 +49,7 @@ namespace CoreLoader.Core
             {
                 if (r.Instance == null)
                 {
-                    r.Instance = Activator.CreateInstance(r.Definition.PluginClass, _platform);
+                    r.Instance = r.Definition.CreateInstance(_platform);
                 }
                 r.Count++;
                 p.Add(r.Instance);
@@ -76,10 +75,11 @@ namespace CoreLoader.Core
 
         internal void AddPlugin(IPluginDefinition definition)
         {
-            _platform.Log?.Write("Adding to repo \"" + definition.Name + " (" + definition.Version + ")");
+            _platform.Log?.Write("Adding to repo \"" + definition.Name + "\" (" + definition.Version + ")");
             var r = new ReferenceManager {Definition = definition};
-            foreach (var p in definition.PluginProvides)
+            foreach (var pl in definition.Provides)
             {
+                var p = (string) pl;
                 if (!_references.ContainsKey(p))
                 {
                     _references[p] = new List<ReferenceManager>();
@@ -88,7 +88,7 @@ namespace CoreLoader.Core
                 if (!_pluginContainers.ContainsKey(p)) continue;
                 if (r.Instance == null)
                 {
-                    r.Instance = Activator.CreateInstance(r.Definition.PluginClass, _platform);
+                    r.Instance = r.Definition.CreateInstance(_platform);
                 }
                 _pluginContainers[p].Add(r.Instance);
                 r.Count++;
@@ -98,19 +98,21 @@ namespace CoreLoader.Core
         internal void RemovePlugin(IPluginDefinition definition)
         {
             _platform.Log?.Info("Removing \"" + definition.Name + "\" from repo.");
-            var re = _references[definition.PluginProvides[0]];
+            var re = _references[(string) definition.Provides[0]];
             var r = re.First(refe => refe.Definition == definition);
             if (r.Count > 0)
             {
-                foreach (var p in definition.PluginProvides)
+                foreach (var pl in definition.Provides)
                 {
+                    var p = (string) pl;
                     _pluginContainers[p].Remove(r.Instance);
                 }
                 r.Instance.Dispose();
                 r.Instance = null;
             }
-            foreach (var p in definition.PluginProvides)
+            foreach (var pl in definition.Provides)
             {
+                var p = (string)pl;
                 _references[p].Remove(r);
                 if (_references[p].Count == 0)
                 {

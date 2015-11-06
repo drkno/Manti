@@ -2,7 +2,7 @@
 using CoreLoader.Core;
 using CoreLoader.Logger;
 
-namespace CoreLoader.Plugins.Logging
+namespace CoreLoader.Plugins.Logging.Console
 {
     internal class ConsoleLoggingPlugin : ILoggingPlugin
     {
@@ -21,17 +21,17 @@ namespace CoreLoader.Plugins.Logging
 
         public void Log(uint logLevel, string prefix, string message)
         {
-            Console.Write(prefix + " ");
+            System.Console.Write(prefix + " ");
             switch (logLevel)
             {
                 case Write: break;
-                case Info: Console.ForegroundColor = ConsoleColor.Cyan; break;
-                case Warning: Console.ForegroundColor = ConsoleColor.Yellow; break;
-                case Error: Console.ForegroundColor = ConsoleColor.Red; break;
+                case Info: System.Console.ForegroundColor = ConsoleColor.Cyan; break;
+                case Warning: System.Console.ForegroundColor = ConsoleColor.Yellow; break;
+                case Error: System.Console.ForegroundColor = ConsoleColor.Red; break;
                 default: goto case Write;
             }
-            Console.WriteLine(message);
-            Console.ResetColor();
+            System.Console.WriteLine(message);
+            System.Console.ResetColor();
         }
 
         public void Dispose()
